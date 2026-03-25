@@ -100,7 +100,7 @@
             class="theme-{theme.id} flex flex-col gap-3 group text-left relative transition-all duration-300 hover:-translate-y-1 active:scale-95 w-full"
           >
             <div 
-              class="aspect-[16/10] w-full rounded-2xl border-2 transition-all duration-500 relative overflow-hidden p-5 flex flex-col justify-between bg-background
+              class="aspect-16/10 w-full rounded-2xl border-2 transition-all duration-500 relative overflow-hidden p-5 flex flex-col justify-between bg-background
               {$settingsStore.theme === theme.id 
                 ? 'border-primary shadow-[0_15px_40px_rgba(0,0,0,0.4),0_0_20px_var(--accent)]' 
                 : 'border-border opacity-70 hover:opacity-100 hover:shadow-xl'}"
@@ -145,7 +145,7 @@
       </div>
     </section>
 
-    <section class="bg-surface border border-border rounded-[2rem] p-8 lg:p-10 shadow-2xl relative overflow-hidden" in:fade={{ delay: 300 }}>
+    <section class="bg-surface border border-border rounded-4xl p-8 lg:p-10 shadow-2xl relative overflow-hidden" in:fade={{ delay: 300 }}>
       <div class="flex items-center gap-5 mb-10">
         <div class="p-4 bg-primary/10 rounded-2xl text-primary shadow-inner">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -225,7 +225,7 @@
     </section>
 
     <footer class="flex flex-col items-center justify-center py-20 group shrink-0" in:fade={{ delay: 500 }}>
-      <div class="w-16 h-16 bg-primary rounded-[1.5rem] flex items-center justify-center mb-6 rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-[0_15px_40px_rgba(0,0,0,0.4),0_0_20px_var(--accent)]">
+      <div class="w-16 h-16 bg-primary rounded-3xl flex items-center justify-center mb-6 rotate-3 group-hover:rotate-0 transition-transform duration-700 shadow-[0_15px_40px_rgba(0,0,0,0.4),0_0_20px_var(--accent)]">
         <svg class="w-8 h-8 text-background" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
       </div>
       <h3 class="text-3xl font-black tracking-[0.4em] uppercase italic drop-shadow-2xl text-text-main">AudioLoom</h3>
