@@ -6,7 +6,6 @@ export interface Settings {
     sub_folder: string;
     ask_every_time: boolean;
     current_theme: string;
-    kullanici_adi: string; 
 }
 
 export const defaultSettings: Settings = {
@@ -17,6 +16,5 @@ export const defaultSettings: Settings = {
     sub_folder: 'Mixler',
     ask_every_time: true,
     current_theme: 'theme-modern',
-    kullanici_adi: ''
 };
 export const playerState = $state<Settings>(defaultSettings);

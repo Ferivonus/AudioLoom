@@ -18,7 +18,6 @@
           playerState.custom_prefix = ayarlar.custom_prefix;
           playerState.sub_folder = ayarlar.sub_folder;
           playerState.ask_every_time = ayarlar.ask_every_time;
-          playerState.kullanici_adi = ayarlar.kullanici_adi;
       } catch (e) {
           console.error("Tauri ayarları yüklenirken hata oluştu:", e);
       }

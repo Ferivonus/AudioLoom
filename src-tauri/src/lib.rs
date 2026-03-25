@@ -20,7 +20,6 @@ pub struct Ayarlar {
     pub sub_folder: String,
     pub ask_every_time: bool,
     pub current_theme: String,
-    pub kullanici_adi: String,
 }
 
 impl Default for Ayarlar {
@@ -33,7 +32,6 @@ impl Default for Ayarlar {
             sub_folder: "Mixler".to_string(),
             ask_every_time: true,
             current_theme: "theme-modern".to_string(),
-            kullanici_adi: "".to_string(),
         }
     }
 }
