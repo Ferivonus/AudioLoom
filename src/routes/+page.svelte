@@ -2,11 +2,9 @@
   import WaveSurfer from 'wavesurfer.js';
   import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions.esm.js';
   import { onDestroy } from 'svelte';
-  
   import { invoke, convertFileSrc } from '@tauri-apps/api/core';
   import { open, save } from '@tauri-apps/plugin-dialog';
 
-  // --- TİP TANIMLAMALARI (Type Definitions) ---
   interface Theme {
     bgClass: string;
     borderClass: string;
@@ -25,12 +23,9 @@
     realPath: string; 
   }
 
-  // TS HATASI ÇÖZÜMÜ: Manuel arayüz oluşturmak yerine kütüphanenin gerçek tiplerini çıkartıyoruz.
-  // Bu sayede kütüphane güncellense bile tipler otomatik uyum sağlar.
   type RegionPluginType = ReturnType<typeof RegionsPlugin.create>;
   type SingleRegionType = ReturnType<RegionPluginType['getRegions']>[0];
 
-  // --- RENK TEMALARI ---
   const defaultThemes: Theme[] = [
     { bgClass: "bg-emerald-500/20", borderClass: "border-emerald-500/50", waveColorHex: "#34d399", progressColorHex: "#059669" },
     { bgClass: "bg-amber-500/20", borderClass: "border-amber-500/50", waveColorHex: "#fbbf24", progressColorHex: "#d97706" },
@@ -40,10 +35,8 @@
   const cutTheme: Theme = { bgClass: "bg-rose-500/20", borderClass: "border-rose-500/50", waveColorHex: "#fb7185", progressColorHex: "#e11d48" };
   const trimTheme: Theme = { bgClass: "bg-cyan-500/20", borderClass: "border-cyan-500/50", waveColorHex: "#22d3ee", progressColorHex: "#0891b2" };
 
-  // --- STATE VE HARİTALAR (Maps) ---
   let tracks: Track[] = [];
   
-  // Tamamen Tip Güvenli (Type-Safe) haritalar
   const wsInstances = new Map<number, WaveSurfer>();
   const regionsPlugins = new Map<number, RegionPluginType>();
 
@@ -55,16 +48,13 @@
   let maxDuration: number = 120;
   let timeMarkers: { label: string }[] = [];
 
-  // Doğru tipe sahip aktif bölge
   let activeRegion: SingleRegionType | null = null;
   let activeTrackId: number | null = null;
 
-  // --- BÖLGE (REGION) EDİTLEME STATE'LERİ ---
   let regionInputStart: string = "0.00";
   let regionInputEnd: string = "0.00";
   let regionError: string = "";
 
-  // --- SOL MENÜ YENİDEN BOYUTLANDIRMA STATE'LERİ ---
   let sidebarWidth: number = 256; 
   let isResizing: boolean = false;
 
@@ -133,7 +123,6 @@
     if (s < 0) s = 0;
 
     regionError = "";
-    // DÜZELTME: WaveSurfer v7'de metod update() değil setOptions()'tır.
     activeRegion.setOptions({ start: s, end: e });
   }
 
@@ -325,8 +314,6 @@
     regionsPlugins.set(track.id, wsRegions);
     wsRegions.enableDragSelection({ color: `${track.waveColorHex}40` });
 
-    // DÜZELTME: Type Explicit (belirgin) vermek yerine TypeScript'in kendi inference (tahmin)
-    // yeteneğini kullanarak uyumsuzluk hatalarının önüne geçtik.
     wsRegions.on('region-created', (region) => {
       regionsPlugins.forEach((plugin, id) => { if (id !== track.id) plugin.clearRegions(); });
       const myRegions = wsRegions.getRegions();
@@ -653,7 +640,6 @@
     cursor: pointer;
   }
   
-  /* Modern CSS Scrollbar Theming (Tema Destekli) */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
