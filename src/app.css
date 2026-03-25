@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* Tailwind v4'e Özel Değişkenlerimizi Tanıtıyoruz */
+@theme {
+  --color-background: var(--bg-color);
+  --color-surface: var(--surface-color);
+  --color-border: var(--border-color);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--primary-color);
+}
+
+@layer base {
+  /* Varsayılan: Karanlık Tema (Kullandığımız Zinc renkleri) */
+  :root, [data-theme='dark'] {
+    --bg-color: #09090b;      /* zinc-950 */
+    --surface-color: #18181b; /* zinc-900 */
+    --border-color: #27272a;  /* zinc-800 */
+    --text-main: #e4e4e7;     /* zinc-200 */
+    --text-muted: #a1a1aa;    /* zinc-400 */
+    --primary-color: #10b981; /* emerald-500 */
+  }
+
+  /* Aydınlık Tema */
+  [data-theme='light'] {
+    --bg-color: #f4f4f5;      /* zinc-100 */
+    --surface-color: #ffffff; /* white */
+    --border-color: #e4e4e7;  /* zinc-200 */
+    --text-main: #18181b;     /* zinc-900 */
+    --text-muted: #71717a;    /* zinc-500 */
+    --primary-color: #059669; /* emerald-600 */
+  }
+
+  /* Gece Yarısı Teması (Mavi Tonlar) */
+  [data-theme='midnight'] {
+    --bg-color: #020617;      /* slate-950 */
+    --surface-color: #0f172a; /* slate-900 */
+    --border-color: #1e293b;  /* slate-800 */
+    --text-main: #f8fafc;     /* slate-50 */
+    --text-muted: #94a3b8;    /* slate-400 */
+    --primary-color: #3b82f6; /* blue-500 */
+  }
+}
