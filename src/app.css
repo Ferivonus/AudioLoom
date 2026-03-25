@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* 1. Tailwind v4 Tema Tanımlamaları */
 @theme {
   --color-background: var(--bg-main);
   --color-surface: var(--bg-surface);
@@ -12,9 +11,6 @@
   --color-border-hover: var(--border-hover);
 }
 
-/* 2. İç İçe Tema Onarımı (Nested Theme Fix) */
-/* Bu blok, bir tema içinde başka bir tema kartı olduğunda 
-   Tailwind'in renkleri doğru (yerel) değişkenden almasını sağlar. */
 [class*="theme-"] {
   --color-background: var(--bg-main);
   --color-surface: var(--bg-surface);
@@ -149,7 +145,6 @@
   --border-hover: #fcee0a;
 }
 
-/* 4. Temel Stiller */
 body {
   background-color: var(--bg-main);
   color: var(--text-main);

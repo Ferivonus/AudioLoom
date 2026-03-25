@@ -5,35 +5,31 @@
   import { invoke } from '@tauri-apps/api/core';
   import { onMount } from 'svelte';
 
-  // SVELTE 5: Alt sayfaların içeriğini (eski adıyla slot) prop olarak alıyoruz
   let { children } = $props();
 
-  // 1. Uygulama açıldığında Tauri'den (Rust JSON dosyasından) ayarları çekiyoruz
   onMount(async () => {
       try {
           const ayarlar = await invoke<Settings>('ayarlari_getir');
           
-          // Gelen ayarları Svelte 5 state'imize aktarıyoruz (Artık snake_case kullanıyoruz)
-          playerState.current_theme = ayarlar.current_theme || 'theme-modern';
-          playerState.export_format = ayarlar.export_format || 'wav';
-          playerState.base_export_dir = ayarlar.base_export_dir || '';
-          playerState.folder_format = ayarlar.folder_format || 'DD-MM-YYYY';
-          playerState.custom_prefix = ayarlar.custom_prefix || 'AudioLoom';
-          playerState.sub_folder = ayarlar.sub_folder || 'Mixler';
-          playerState.ask_every_time = ayarlar.ask_every_time ?? true;
-          playerState.kullanici_adi = ayarlar.kullanici_adi || '';
+          playerState.current_theme = ayarlar.current_theme;
+          playerState.export_format = ayarlar.export_format;
+          playerState.base_export_dir = ayarlar.base_export_dir;
+          playerState.folder_format = ayarlar.folder_format;
+          playerState.custom_prefix = ayarlar.custom_prefix;
+          playerState.sub_folder = ayarlar.sub_folder;
+          playerState.ask_every_time = ayarlar.ask_every_time;
+          playerState.kullanici_adi = ayarlar.kullanici_adi;
       } catch (e) {
-          console.error("Tauri ayarları yüklenirken hata oluştu (Varsayılanlar kullanılacak):", e);
+          console.error("Tauri ayarları yüklenirken hata oluştu:", e);
       }
   });
 
-  // 2. Tema değiştiğinde HTML <body> etiketini anında güncelliyoruz
   $effect(() => {
     if (typeof document !== 'undefined') {
       const body = document.body;
       const currentThemes = Array.from(body.classList).filter(c => c.startsWith('theme-'));
       if (currentThemes.length > 0) body.classList.remove(...currentThemes);
-      body.classList.add(playerState.current_theme); // currentTheme yerine current_theme
+      body.classList.add(playerState.current_theme);
     }
   });
 </script>

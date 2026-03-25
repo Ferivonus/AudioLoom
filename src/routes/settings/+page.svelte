@@ -117,7 +117,7 @@
             class="flex flex-col gap-4 group text-left relative transition-all duration-300 hover:-translate-y-1 active:scale-95 w-full min-w-0 {tema.id}"
           >
             <div 
-              class="aspect-[16/10] w-full rounded-2xl border-2 transition-all duration-500 relative overflow-hidden p-3 flex flex-col gap-2 shrink-0 bg-background text-text-main
+              class="aspect-16/10 w-full rounded-2xl border-2 transition-all duration-500 relative overflow-hidden p-3 flex flex-col gap-2 shrink-0 bg-background text-text-main
               {playerState.current_theme === tema.id 
                 ? 'border-primary shadow-[0_15px_40px_rgba(0,0,0,0.4),0_0_20px_var(--accent)] ring-1 ring-primary' 
                 : 'border-border opacity-80 hover:opacity-100 hover:border-border-hover hover:shadow-xl'}"

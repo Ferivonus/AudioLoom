@@ -1,8 +1,5 @@
 <script lang="ts">
-  /**
-   * AudioLoom - Kullanım Kılavuzu ve Yardım Sayfası
-   * Okunabilirlik ve font boyutları optimize edildi.
-   */
+
 </script>
 
 <svelte:head>
@@ -11,7 +8,6 @@
 
 <div class="flex-1 overflow-y-auto p-10 bg-background font-sans transition-colors duration-500">
   <div class="max-w-5xl mx-auto pb-32">
-    <!-- Başlık Bölümü -->
     <div class="mb-16">
       <h2 class="text-5xl lg:text-6xl font-black uppercase italic text-text-main tracking-tighter leading-none">
         Kullanım Kılavuzu <br/> <span class="text-primary">& Yardım</span>
@@ -23,7 +19,6 @@
     
     <div class="grid gap-12">
       
-      <!-- 1. Kısayollar -->
       <section class="bg-surface border border-border rounded-[2.5rem] p-10 shadow-2xl transition-colors">
         <h3 class="text-2xl font-black uppercase italic text-primary mb-8 flex items-center gap-4 border-b border-border/50 pb-6">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -61,7 +56,6 @@
         </ul>
       </section>
 
-      <!-- 2. Kanal (Track) İşlemleri -->
       <section class="bg-surface border border-border rounded-[2.5rem] p-10 shadow-2xl transition-colors">
         <h3 class="text-2xl font-black uppercase italic text-primary mb-8 flex items-center gap-4 border-b border-border/50 pb-6">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -98,7 +92,6 @@
         </div>
       </section>
 
-      <!-- 3. Kesme ve Kırpma İşlemleri -->
       <section class="bg-surface border border-border rounded-[2.5rem] p-10 shadow-2xl transition-colors">
         <h3 class="text-2xl font-black uppercase italic text-primary mb-8 flex items-center gap-4 border-b border-border/50 pb-6">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -116,14 +109,14 @@
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-8 bg-background rounded-[2rem] border border-border/50 shadow-inner relative overflow-hidden group">
+            <div class="p-8 bg-background rounded-4xl border border-border/50 shadow-inner relative overflow-hidden group">
               <h4 class="font-black uppercase tracking-[0.2em] text-rose-500 flex items-center gap-4 mb-4 text-lg">
                 <span class="w-5 h-5 rounded-lg bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.8)]"></span> Kesme (Cut)
               </h4>
               <p class="text-text-muted text-base leading-relaxed font-medium italic">Seçilen aralığı projeden ayıklar ve kalan parçaları otomatik olarak birleştirir. <span class="text-rose-400 font-bold">Kırmızı renk</span> ile sembolize edilir.</p>
             </div>
             
-            <div class="p-8 bg-background rounded-[2rem] border border-border/50 shadow-inner relative overflow-hidden group">
+            <div class="p-8 bg-background rounded-4xl border border-border/50 shadow-inner relative overflow-hidden group">
               <h4 class="font-black uppercase tracking-[0.2em] text-cyan-500 flex items-center gap-4 mb-4 text-lg">
                 <span class="w-5 h-5 rounded-lg bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)]"></span> Kırpma (Trim)
               </h4>
@@ -133,7 +126,6 @@
         </div>
       </section>
 
-      <!-- 4. Dışa Aktarma -->
       <section class="bg-surface border border-border rounded-[2.5rem] p-10 shadow-2xl transition-colors">
         <h3 class="text-2xl font-black uppercase italic text-primary mb-8 flex items-center gap-4 border-b border-border/50 pb-6">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -158,7 +150,6 @@
 </div>
 
 <style>
-  /* Sayfa içi kaydırma çubuğu tasarımı */
   div::-webkit-scrollbar {
     width: 8px;
   }
