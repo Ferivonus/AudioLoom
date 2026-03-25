@@ -13,11 +13,12 @@
     "windows": [
       {
         "title": "audioloom",
-        "width": 800,
-        "height": 600
+        "width": 1200,
+        "height": 800
       }
     ],
     "security": {
+      "csp": null,
       "assetProtocol": {
         "enable": true,
         "scope": ["**"]
@@ -33,6 +34,7 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "resources": ["binaries/*"]
   }
 }

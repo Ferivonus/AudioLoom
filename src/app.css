@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
+/* 1. Tailwind v4 Tema Tanımlamaları */
 @theme {
-  /* Ana Arayüz Eşleşmeleri - HTML sınıfların bu değişkenleri kullanır */
   --color-background: var(--bg-main);
   --color-surface: var(--bg-surface);
   --color-primary: var(--accent);
@@ -12,7 +12,21 @@
   --color-border-hover: var(--border-hover);
 }
 
-/* --- TEMA TANIMLAMALARI --- */
+/* 2. İç İçe Tema Onarımı (Nested Theme Fix) */
+/* Bu blok, bir tema içinde başka bir tema kartı olduğunda 
+   Tailwind'in renkleri doğru (yerel) değişkenden almasını sağlar. */
+[class*="theme-"] {
+  --color-background: var(--bg-main);
+  --color-surface: var(--bg-surface);
+  --color-primary: var(--accent);
+  --color-primary-sec: var(--accent-sec);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-dim);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+}
+
+/* 3. Tema Renk Paletleri */
 
 :root, .theme-modern {
   --bg-main: #0f0f11;
@@ -135,36 +149,17 @@
   --border-hover: #fcee0a;
 }
 
-/* --- GENEL AYARLAR --- */
-
+/* 4. Temel Stiller */
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   transition: background-color 0.4s ease, color 0.4s ease;
-  overflow: hidden;
+  min-height: 100vh;
   margin: 0;
 }
 
 ::selection {
   background: var(--accent);
-  color: #ffffff;
-}
-
-.custom-scrollbar::-webkit-scrollbar { 
-  width: 5px; 
-  height: 5px; 
-}
-
-.custom-scrollbar::-webkit-scrollbar-track { 
-  background: transparent; 
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb { 
-  background: var(--border); 
-  border-radius: 10px; 
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { 
-  background: var(--accent); 
+  color: #000000;
 }

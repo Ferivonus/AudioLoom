@@ -4,9 +4,102 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use serde::Deserialize;
 use tauri::Manager;
+use serde::{ Serialize};
+use std::fs;
+use tauri::{AppHandle};
 
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
+
+// 1. Frontend'deki arayüzle eşleşen Veri Yapısı (Tamamen snake_case)
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Ayarlar {
+    pub export_format: String,
+    pub base_export_dir: String,
+    pub folder_format: String,
+    pub custom_prefix: String,
+    pub sub_folder: String,
+    pub ask_every_time: bool,
+    pub current_theme: String,
+    pub kullanici_adi: String,
+}
+
+// Eğer JSON dosyası yoksa kullanılacak varsayılan değerler
+impl Default for Ayarlar {
+    fn default() -> Self {
+        Self {
+            export_format: "wav".to_string(),
+            base_export_dir: "".to_string(),
+            folder_format: "DD-MM-YYYY".to_string(),
+            custom_prefix: "AudioLoom".to_string(),
+            sub_folder: "Mixler".to_string(),
+            ask_every_time: true,
+            current_theme: "theme-modern".to_string(),
+            kullanici_adi: "".to_string(),
+        }
+    }
+}
+
+// 2. Klasör Yolunu Getir
+#[tauri::command]
+fn get_app_data_dir(app: AppHandle) -> Result<String, String> {
+    let dir = app.path().app_local_data_dir().map_err(|e| e.to_string())?;
+    Ok(dir.to_string_lossy().to_string())
+}
+
+// 3. JSON Dosyasından Ayarları Oku (YOKSA OLUŞTUR VE ONAR)
+#[tauri::command]
+fn ayarlari_getir(app: AppHandle) -> Result<Ayarlar, String> {
+    let dir = app.path().app_local_data_dir().map_err(|e| e.to_string())?;
+    let settings_path = dir.join("audioloom_settings.json");
+
+    // Klasör hiç yoksa oluştur
+    if !dir.exists() {
+        fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    }
+
+    if settings_path.exists() {
+        // Dosya var, okumayı dene
+        let data = fs::read_to_string(&settings_path).map_err(|e| e.to_string())?;
+        
+        // Eğer dosya içi boşaltılmışsa veya JSON yapısı bozulmuşsa çökmesini engelle
+        match serde_json::from_str::<Ayarlar>(&data) {
+            Ok(settings) => Ok(settings),
+            Err(_) => {
+                // Dosya bozuk! Varsayılan değerleri oluştur ve bozuk dosyanın üstüne yazarak onar
+                let varsayilan = Ayarlar::default();
+                if let Ok(yeni_data) = serde_json::to_string_pretty(&varsayilan) {
+                    let _ = fs::write(&settings_path, yeni_data);
+                }
+                Ok(varsayilan)
+            }
+        }
+    } else {
+        // Dosya YOK! Varsayılan ayarları oluştur ve hemen diske .json olarak kaydet
+        let varsayilan = Ayarlar::default();
+        let data = serde_json::to_string_pretty(&varsayilan).map_err(|e| e.to_string())?;
+        fs::write(&settings_path, data).map_err(|e| e.to_string())?;
+        
+        Ok(varsayilan)
+    }
+}
+
+// 4. JSON Dosyasına Ayarları Kaydet
+#[tauri::command]
+fn ayarlari_kaydet(app: AppHandle, ayarlar: Ayarlar) -> Result<(), String> {
+    let dir = app.path().app_local_data_dir().map_err(|e| e.to_string())?;
+    
+    // Klasör yoksa oluştur
+    if !dir.exists() {
+        fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    }
+    
+    let settings_path = dir.join("audioloom_settings.json");
+    let data = serde_json::to_string_pretty(&ayarlar).map_err(|e| e.to_string())?;
+    
+    fs::write(settings_path, data).map_err(|e| e.to_string())?;
+    Ok(())
+}
 
 fn get_ffmpeg_path(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     let exe_path = std::env::current_exe()
@@ -111,7 +204,6 @@ async fn export_project(
 ) -> Result<String, String> {
     
     tauri::async_runtime::spawn_blocking(move || {
-        // YENİ EKLENDİ: Hedef klasör yoksa oluştur.
         if let Some(parent) = Path::new(&output_path).parent() {
             std::fs::create_dir_all(parent).map_err(|e| format!("Klasör oluşturulamadı: {}", e))?;
         }
@@ -175,7 +267,6 @@ async fn export_single_track(
 ) -> Result<(), String> {
     
     tauri::async_runtime::spawn_blocking(move || {
-        // YENİ EKLENDİ: Hedef klasör yoksa oluştur.
         if let Some(parent) = Path::new(&dest_path).parent() {
             std::fs::create_dir_all(parent).map_err(|e| format!("Klasör oluşturulamadı: {}", e))?;
         }
@@ -216,7 +307,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init()) 
         .plugin(tauri_plugin_fs::init())     
-        .invoke_handler(tauri::generate_handler![process_audio_region, export_project, export_single_track])
+        .invoke_handler(tauri::generate_handler![process_audio_region, export_project, export_single_track, get_app_data_dir, ayarlari_getir, ayarlari_kaydet])
         .run(tauri::generate_context!())
         .expect("Tauri uygulaması çalıştırılırken bir hata oluştu");
 }
